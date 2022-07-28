@@ -187,7 +187,7 @@ async def on_guild_channel_pins_update(channel, last_pin):
                 pinEmbed = discord.Embed(
                     # title="Sent by " + last_pinned.author.name,
                     description="\"" + last_pinned.content + "\"",
-                    colour=EMBED_COLORS[randomColor]
+                    colour=last_pinned.author.color
                 )
                 # checks to see if pinned message has attachments
                 attachments = last_pinned.attachments
