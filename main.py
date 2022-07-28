@@ -197,7 +197,9 @@ async def on_guild_channel_pins_update(channel, last_pin):
                     name="Jump", value=last_pinned.jump_url, inline=False)
                 pinEmbed.set_footer(
                     text="sent in: " + last_pinned.channel.name + " - at: " + str(last_pinned.created_at))
-                pinEmbed.set_author(name='Sent by ' + last_pinned.author.name)
+                pinEmbed.set_author(name='Sent by ' + last_pinned.author.name,
+                    url=last_pinned.author.avatar_url,
+                    icon_url=last_pinned.author.avatar_url)
                 await last_pinned.guild.get_channel(int(pins_channel)).send(embed=pinEmbed)
 
                 # remove this message if you do not want the bot to send a message when you pin a message
