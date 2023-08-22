@@ -101,6 +101,7 @@ async def settings(ctx):
 @client.command(name='pins', pass_context=True)
 async def pins(ctx):
     numPins = await ctx.message.channel.pins()
+    print("user requested pin count for " + ctx.message.channel.name + ": " + numPins + " pins")
     await ctx.send(ctx.message.channel.mention + " has " + str(len(numPins)) + " pins.")
 
 # The method that takes care of pin updates in a server
@@ -206,6 +207,8 @@ async def on_guild_channel_pins_update(channel, last_pin):
                 await last_pinned.channel.send(
                     "See oldest pinned message in " + channel.guild.get_channel(int(pins_channel)).mention)
                 await last_pinned.unpin()
+                print("pinned message: " + numPins[0].jump_url)
+                print("archived message: " + last_pinned.jump_url)
     except:
         print("unpinned a message, not useful for bot so does nothing")
 
