@@ -101,7 +101,7 @@ async def settings(ctx):
 @client.command(name='pins', pass_context=True)
 async def pins(ctx):
     numPins = await ctx.message.channel.pins()
-    print("user requested pin count for " + ctx.message.channel.name + ": " + numPins + " pins")
+    print("user requested pin count for " + ctx.message.channel.name + ": " + str(len(numPins)) + " pins")
     await ctx.send(ctx.message.channel.mention + " has " + str(len(numPins)) + " pins.")
 
 # The method that takes care of pin updates in a server
