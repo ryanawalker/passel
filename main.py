@@ -30,7 +30,9 @@ from discord.ext import commands
 
 # TODO change command here if you want to use another command, replace p. with anything you want inside the single ('') quotes
 client = commands.Bot(command_prefix='p.',
-                      status='Online', case_insensitive=True)
+                      status='Online',
+                      case_insensitive=True,
+                      intents=discord.Intents.default())
 client.remove_command("help")
 
 # TODO change mode to 1 or 2 here
