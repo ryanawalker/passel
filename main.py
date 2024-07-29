@@ -89,9 +89,9 @@ async def settings(ctx):
 
 @client.command(name='pins', pass_context=True)
 async def pins(ctx):
-    numPins = await ctx.message.channel.pins()
-    print("user requested pin count for " + ctx.message.channel.name + ": " + str(len(numPins)) + " pins")
-    await ctx.send(ctx.message.channel.mention + " has " + str(len(numPins)) + " pins.")
+    channelPins = await ctx.message.channel.pins()
+    print("user requested pin count for " + ctx.message.channel.name + ": " + str(len(channelPins)) + " pins")
+    await ctx.send(ctx.message.channel.mention + " has " + str(len(channelPins)) + " pins.")
 
 # The method that takes care of pin updates in a server
 @client.event
@@ -100,12 +100,12 @@ async def on_guild_channel_pins_update(channel, last_pin):
     try:
         print(channel)
         print(last_pin)
-        numPins = await channel.pins()
+        channelPins = await channel.pins()
       
-        print("pins updated in " + channel.name + ": there are now " + numPins + " pins.")
+        print("pins updated in " + channel.name + ": there are now " + len(channelPins) + " pins.")
 
-        last_pinned = numPins[0]
-        if len(numPins) == 50:
+        last_pinned = channelPins[0]
+        if len(channelPins) == 50:
             isChannelThere = False
             # checks to see if pins channel exists in the server
             print("Checking for pin channel")
@@ -124,7 +124,7 @@ async def on_guild_channel_pins_update(channel, last_pin):
                 return
 
             print("There are 50 pins, time to archive.")
-            last_pinned = numPins[len(numPins) - 1]
+            last_pinned = channelPins[len(channelPins) - 1]
             print(last_pinned)
             print("Building embed")
             pinEmbed = discord.Embed(
@@ -158,7 +158,7 @@ async def on_guild_channel_pins_update(channel, last_pin):
             await last_pinned.channel.send(
                 "See oldest pinned message in " + channel.guild.get_channel(int(pins_channel)).mention)
             await last_pinned.unpin()
-            print("pinned message: " + numPins[0].jump_url)
+            print("pinned message: " + channelPins[0].jump_url)
             print("archived message: " + last_pinned.jump_url)
     except Exception as e: print(e)
 
