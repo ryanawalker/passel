@@ -100,8 +100,8 @@ async def on_guild_channel_pins_update(channel, last_pin):
     try:
         print(channel)
         print(last_pin)
-        randomColor = randrange(len(EMBED_COLORS))
         numPins = await channel.pins()
+      
         print("pins updated in " + channel.name + ": there are now " + numPins + " pins.")
 
         last_pinned = numPins[0]
@@ -160,8 +160,7 @@ async def on_guild_channel_pins_update(channel, last_pin):
             await last_pinned.unpin()
             print("pinned message: " + numPins[0].jump_url)
             print("archived message: " + last_pinned.jump_url)
-    except:
-        print("something went wrong")
+    except Exception as e: print(e)
 
 
 # TODO Replace TOKEN with the token from discord developer portal 
