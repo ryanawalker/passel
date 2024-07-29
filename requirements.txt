@@ -1,4 +1,3 @@
-dblpy==0.3.4
 discord.py==2.4
 dj-database-url==0.2.1
 Django==1.4
