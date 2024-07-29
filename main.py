@@ -130,8 +130,8 @@ async def on_guild_channel_pins_update(channel, last_pin):
                 text="sent in: " + last_pinned.channel.name + " - at: " + str(last_pinned.created_at))
             print("adding author")
             pinEmbed.set_author(name='Sent by ' + last_pinned.author.name,
-                url=last_pinned.author.avatar_url,
-                icon_url=last_pinned.author.avatar_url)
+                url=last_pinned.author.avatar.url,
+                icon_url=last_pinned.author.avatar.url)
 
             print("sending pin")
             await last_pinned.guild.get_channel(int(pins_channel)).send(embed=pinEmbed)
