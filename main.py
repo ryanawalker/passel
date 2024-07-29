@@ -34,7 +34,7 @@ intents.message_content = True
 client = commands.Bot(command_prefix='p.',
                       status='Online',
                       case_insensitive=True,
-                      intents=discord.Intents.default())
+                      intents=intents)
 client.remove_command("help")
 
 # TODO change mode to 1 or 2 here
