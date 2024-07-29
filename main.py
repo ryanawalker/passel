@@ -102,7 +102,7 @@ async def on_guild_channel_pins_update(channel, last_pin):
         print(last_pin)
         channelPins = await channel.pins()
       
-        print("pins updated in " + channel.name + ": there are now " + len(channelPins) + " pins.")
+        print("pins updated in " + channel.name + ": there are now " + str(len(channelPins)) + " pins.")
 
         last_pinned = channelPins[0]
         if len(channelPins) == 50:
