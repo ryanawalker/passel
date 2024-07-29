@@ -150,7 +150,7 @@ async def on_guild_channel_pins_update(channel, last_pin):
                 url=last_pinned.author.avatar_url,
                 icon_url=last_pinned.author.avatar_url)
 
-            print("sending pin"
+            print("sending pin")
             await last_pinned.guild.get_channel(int(pins_channel)).send(embed=pinEmbed)
 
             # remove this message if you do not want the bot to send a message when you pin a message
