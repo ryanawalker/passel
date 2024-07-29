@@ -106,23 +106,6 @@ async def on_guild_channel_pins_update(channel, last_pin):
 
         last_pinned = channelPins[0]
         if len(channelPins) == 50:
-            isChannelThere = False
-            # checks to see if pins channel exists in the server
-            print("Checking for pin channel")
-            channnelList = channel.guild.channels
-            print(channelList)
-            for channel in channnelList:
-                print("Checking " + channel)
-                if int(pins_channel) == int(channel.id):
-                    print("Pins channel found")
-                    isChannelThere = True
-    
-            # checks to see if pins channel exists or has been deleted
-            if not isChannelThere:
-                print("Pins channel not found")
-                await channel.send("Check to see if the pins archive channel during setup has been deleted")
-                return
-
             print("There are 50 pins, time to archive.")
             last_pinned = channelPins[len(channelPins) - 1]
             print(last_pinned)
