@@ -1,4 +1,4 @@
-from random import randrange
+from random import randint, randrange
 
 # TODO if using Github diff deployment on HeroKu uncomment the next line
 import os
@@ -74,7 +74,6 @@ async def pins(ctx):
 # The method that takes care of pin updates in a server
 @client.event
 async def on_guild_channel_pins_update(channel, last_pin):
-    global data
     try:
         print(channel)
         print(last_pin)
@@ -99,10 +98,17 @@ async def on_guild_channel_pins_update(channel, last_pin):
                     embed_color = member.color if member.color != discord.Colour.default() else discord.Colour.blurple()
                 except:
                     embed_color = discord.Colour.blurple()  # Fallback color
+
+            embed_content = "\"" + last_pinned.content + "\""
+
+            if randint(1, 512) == 7:
+                embed_content = "# ✨\n" + embed_content + "\n# ✨"
+                embed_color = discord.Colour(~embed_color.value & 0xFFFFFF)
+
             
             pinEmbed = discord.Embed(
                 # title="Sent by " + last_pinned.author.name,
-                description="\"" + last_pinned.content + "\"",
+                description=embed_content,
                 colour=embed_color
             )
             print(pinEmbed)
@@ -119,9 +125,10 @@ async def on_guild_channel_pins_update(channel, last_pin):
             pinEmbed.set_footer(
                 text="sent in: " + last_pinned.channel.name + " - at: " + str(last_pinned.created_at))
             print("adding author")
+            avatar_url = last_pinned.author.avatar.url if last_pinned.author.avatar else last_pinned.author.default_avatar.url
             pinEmbed.set_author(name='Sent by ' + last_pinned.author.name,
-                url=last_pinned.author.avatar.url,
-                icon_url=last_pinned.author.avatar.url)
+                url=avatar_url,
+                icon_url=avatar_url)
 
             print("sending pin")
             await last_pinned.guild.get_channel(int(pins_channel)).send(embed=pinEmbed)
