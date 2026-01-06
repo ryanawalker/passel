@@ -31,6 +31,7 @@ from discord.ext import commands
 # TODO change command here if you want to use another command, replace p. with anything you want inside the single ('') quotes
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 client = commands.Bot(command_prefix='p.',
                       status='Online',
                       case_insensitive=True,
@@ -45,29 +46,6 @@ sendall = 0
 # TODO 
 # replace the 0 with the pins channel ID for your sever
 pins_channel = 867221698867757066
-
-# discord embed colors
-EMBED_COLORS = [
-    discord.Colour.magenta(),
-    discord.Colour.blurple(),
-    discord.Colour.dark_teal(),
-    discord.Colour.blue(),
-    discord.Colour.dark_blue(),
-    discord.Colour.dark_gold(),
-    discord.Colour.dark_green(),
-    discord.Colour.dark_grey(),
-    discord.Colour.dark_magenta(),
-    discord.Colour.dark_orange(),
-    discord.Colour.dark_purple(),
-    discord.Colour.dark_red(),
-    discord.Colour.darker_grey(),
-    discord.Colour.gold(),
-    discord.Colour.green(),
-    discord.Colour.greyple(),
-    discord.Colour.orange(),
-    discord.Colour.purple(),
-    discord.Colour.magenta(),
-]
 
 # When the bot is ready following sets the status of the bot
 @client.event
@@ -110,10 +88,22 @@ async def on_guild_channel_pins_update(channel, last_pin):
             last_pinned = channelPins[len(channelPins) - 1]
             print(last_pinned)
             print("Building embed")
+            
+            # Get the member object to ensure we have role color data
+            # author.color can be black if author is a User (not Member) or has no colored roles
+            embed_color = last_pinned.author.color
+            if embed_color == discord.Colour.default():
+                # Try to fetch the member from the guild for accurate color
+                try:
+                    member = await last_pinned.guild.fetch_member(last_pinned.author.id)
+                    embed_color = member.color if member.color != discord.Colour.default() else discord.Colour.blurple()
+                except:
+                    embed_color = discord.Colour.blurple()  # Fallback color
+            
             pinEmbed = discord.Embed(
                 # title="Sent by " + last_pinned.author.name,
                 description="\"" + last_pinned.content + "\"",
-                colour=last_pinned.author.color
+                colour=embed_color
             )
             print(pinEmbed)
             # checks to see if pinned message has attachments
